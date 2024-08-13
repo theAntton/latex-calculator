@@ -1,5 +1,5 @@
 # Latex Calculator
-A tool for sanomapro that calculates simple equations inside the editor using the [mathjs](https://mathjs.org/) library
+A chrome extension for sanomapro that calculates simple equations inside the editor using the [mathjs](https://mathjs.org/) library
 
 ## Usage:
 - To calculate a selection press alt + enter
