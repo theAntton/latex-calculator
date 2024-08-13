@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "permissions": [
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://kampus.sanomapro.fi/*"
+      ],
+      "js": [
+        "mathjs.js",
+        "content.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "name": "Latex compute",
+  "version": "1.0",
+  "description": "Computes latex"
+}
