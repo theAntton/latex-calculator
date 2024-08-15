@@ -4,33 +4,25 @@ console.log("Content script loaded.");
 
 
 function parseLatex(latex) {
-    // Replace multiplication (cdot) with *
-    original = latex;
-
-    // Replace square root with JavaScript Math.sqrt
-    // latex = latex.replace(/\\sqrt\{(\d+)\}/, 'Math.sqrt($1)');
-
-    // Replace square root with **
     latex = latex.replaceAll("\\cdot", "*")
-    latex = latex.replaceAll("\\left(", "(")
-    latex = latex.replaceAll("\\right)", ")")
-    latex = latex.replace(/\\sqrt\{([^}]+)\}/g, '($1)^0.5');
-    latex = latex.replace("\\pi", Math.PI);
-
-
-    // Replace nth root with **
-    latex = latex.replace(/\\sqrt\[(\d+)\]\{([^}]+)\}/g, '($2)^(1/$1)');
-
-    latex = latex.replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1)/($2)');
-
-    latex = latex.replaceAll("{", "")
-    latex = latex.replaceAll("}", "")
+        .replaceAll("\\left(", "(")
+        .replaceAll("\\right)", ")")
+        .replace(/\\sqrt\{([^}]+)\}/g, '($1)^0.5')
+        .replace(/\\sqrt\[(\d+)\]\{([^}]+)\}/g, '($2)^(1/$1)')
+        .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1)/($2)')
+        .replaceAll(" ", "")
+        .replaceAll("{", "")
+        .replaceAll("}", "")
+        .replaceAll("°", "deg")
+        .replaceAll("\\", "")
+        .replaceAll(" ", "")
 
 
     console.log(latex)
     try {
-        console.log(math.evaluate(latex));
-        return math.evaluate(latex);
+        let result = Math.round(math.evaluate(latex) * 1000, 3) / 1000;
+        console.log(result);
+        return result;
     } catch (err) {
         console.log("Invalid expression")
     }
@@ -73,7 +65,7 @@ function addAltEnterListener() {
                     richTextEditor.querySelector(".mq-root-block.mq-hasCursor").appendChild(t)
                     t.innerText = parsedLatex;
 
-                    richTextEditor.addEventListener('keypress', function (event) {
+                    richTextEditor.addEventListener('keydown', function (event) {
                         t.remove();
                         if (event.key === 'Enter') {
                             event.preventDefault();
