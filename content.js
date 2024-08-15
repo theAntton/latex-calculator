@@ -20,7 +20,8 @@ function parseLatex(latex) {
 
     console.log(latex)
     try {
-        let result = Math.round(math.evaluate(latex) * 1000, 3) / 1000;
+        let result = math.evaluate(latex);
+        if (!isNaN(result)) result = Math.round(result * 1000) / 1000
         console.log(result);
         return result;
     } catch (err) {
